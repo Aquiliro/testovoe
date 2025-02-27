@@ -1,5 +1,5 @@
 # testovoe
 
-
-docker compose up -d
-ansible-playbook -i inventory.ini -b playbook.yml
+Запуск
+1. docker compose up -d
+2. ansible-playbook -i inventory.ini -b playbook.yml
