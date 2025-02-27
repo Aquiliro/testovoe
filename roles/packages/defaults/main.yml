@@ -1,0 +1,7 @@
+packages:
+  - htop
+  - ncdu
+  - git
+  - nano
+  - acl
+  - unzip

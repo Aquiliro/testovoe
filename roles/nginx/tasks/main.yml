@@ -1,0 +1,39 @@
+- name: Установить nginx
+  apt:
+    name: nginx
+    state: present
+    update_cache: yes
+
+- name: Деплой настройки для статики
+  template:
+    src: static_nginx.conf.j2
+    dest: /etc/nginx/sites-available/static
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Включить конфигурацию статики
+  file:
+    src: /etc/nginx/sites-available/static
+    dest: /etc/nginx/sites-enabled/static
+    state: link
+
+- name: Отключить дефолтную конфигурацию nginx
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+
+- name: Тест конфигурацию nginx
+  command: nginx -t
+  register: nginx_test
+  ignore_errors: yes
+
+- name: Прервать запуск при ошибке теста nginx
+  fail:
+    msg: "Ошибка в конфигурации nginx"
+  when: nginx_test.rc != 0
+
+- name: Ребут nginx
+  service:
+    name: nginx
+    state: restarted

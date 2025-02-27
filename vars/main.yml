@@ -1,0 +1,19 @@
+custom_groups:
+  - test_group
+
+users:
+  - name: bair0
+    shell: /bin/bash
+    state: present
+    pubkey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKyFCxWE1NS4kf4+VjR2Dmlqkhz07fmgkDts9rdskHHv aquiliro@MacBook-Air-Bair.local"
+    password: "test0"
+    groups:
+      - sudo
+      - test_group
+  - name: bair1
+    shell: /bin/zsh
+    state: present
+    pubkey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKyFCxWE1NS4kf4+VjR2Dmlqkhz07fmgkDts9rdskHHv aquiliro@MacBook-Air-Bair.local"
+    password: "test1"
+    groups:
+      - sudo

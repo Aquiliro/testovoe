@@ -1,0 +1,8 @@
+- name: Обновляем список пакетов apt
+  apt:
+    update_cache: yes
+
+- name: Установить дополнительные утилиты
+  apt:
+    name: "{{ packages }}"
+    state: present

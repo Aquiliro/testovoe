@@ -1,0 +1,20 @@
+server {
+    listen 80;
+    server_name localhost;
+
+    access_log /var/log/nginx/static_access.log;
+    error_log /var/log/nginx/static_error.log;
+
+    location /images/ {
+        root /var/www;    
+        autoindex on;
+
+        gzip on;
+        gzip_types image/png image/jpeg image/gif;
+    }
+
+    
+    location /images {
+        return 301 /images/;
+    }
+}

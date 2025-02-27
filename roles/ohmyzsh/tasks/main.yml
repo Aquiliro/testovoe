@@ -1,0 +1,20 @@
+- name: Установить zsh для пользователей, если требуется
+  apt:
+    name: zsh
+    state: present
+    update_cache: yes
+  when: "'/bin/zsh' in item.shell"
+  loop: "{{ users }}"
+  loop_control:
+    loop_var: item
+
+- name: Установить oh-my-zsh для пользователей с оболочкой zsh
+  become_user: "{{ item.name }}"
+  git:
+    repo: 'https://github.com/ohmyzsh/ohmyzsh.git'
+    dest: "~/.oh-my-zsh"
+    update: no
+  loop: "{{ users }}"
+  loop_control:
+    loop_var: item
+  when: item.shell == '/bin/zsh'

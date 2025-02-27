@@ -1,0 +1,18 @@
+- name: Создать директорию для статики
+  file:
+    path: /var/www/images
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: '0755'
+
+- name: Скачать архив со статикой с Google Drive
+  get_url:
+    url: "https://drive.google.com/uc?id=1L9hsq9ZFB5VbXYJ3kEKH47x9nhxxZEnI&export=download"
+    dest: /tmp/static.zip
+
+- name: Распаковать архив со статикой
+  unarchive:
+    src: /tmp/static.zip
+    dest: /var/www/images/
+    remote_src: yes

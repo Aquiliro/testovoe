@@ -1,0 +1,23 @@
+- name: Создать доп группы
+  group:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ custom_groups | default([]) }}"
+
+- name: Управление пользаками 
+  user:
+    name: "{{ item.name }}"
+    shell: "{{ item.shell }}"
+    state: "{{ item.state }}"
+    password: "{{ item.password | default(omit) }}"
+    groups: "{{ item.groups | join(',') }}"
+    append: yes
+  loop: "{{ users }}"
+
+- name: Настроить SSH-ключи для пользователей
+  authorized_key:
+    user: "{{ item.name }}"
+    key: "{{ item.pubkey }}"
+    state: present
+  loop: "{{ users }}"
+  when: item.pubkey is defined
